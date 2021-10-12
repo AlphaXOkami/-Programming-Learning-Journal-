@@ -96,6 +96,117 @@ Atan 2 is the mathematical function that returns any values ranging from the Xax
  This line of code takes our movement into account.
  Finally add an extension, CinemachineCollider and that essentially makes camera angles more clear. 
         
+  ## 12/10/21
+# Day 3 week 4 
+# Doing Movement for a platform fighter. 
+
+So my initial idea for my final year project was to make a 2D platform fighter but in order to do so I'd need to know how to have decent movement such as run and jumps so in this tutorial I'll be talking about how I'll be doing that. 
+
+
+# The Stage
+
+First I need to have a simple stage, one that's just a regular rectangle will do. Go to the Heirachy, and make a Square object and place it into your scene then go ahead and scale it to however you'd want it to look, for this one I'm gonna be doing simple stage no platforms for simplicity sake.  
+
+Next we're going to make sure that we have a solid surface because if we run the game it's more than likely that our character will fall through the map without being able to run on something. 
+
+
+
+
+
+# Setting up our Character 
+
+For this test, just make a sprite same thing with a square as we did before, next add a box collider (2D) as we're doing it in a 2D space. Next, add a rigidbody 2D component to our character too, so we can jump around later on. 
+
+# Movement
+
+Now let's move on to the meat of the project which is the movement, set up a brand new character script let's name it CharacterController.
+Open up the script and we have a basic script now that we can work with. In the Update part of the script we'll start by writing something for the X axis. 
+We'll start by writing this: 
+ 
+    public float MovementSpeed = 5f;
+    private float Movement;
+    private Rigidbody2D rb;
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
+    void Start()
+    {
         
+    }
+
+  
+    void Update()
+    {
+        Movement = Input.GetAxis("Horizontal");
+       
+    }
+
+    private void FixedUpdate()
+    {
+        rb.velocity = new Vector2(Movement* MovementSpeed, rb.velocity.y); 
+    }
+}
+  
+  
+  Now to test this I then added the script to my test character and hit play. As it seems the character moves fairly slow, now in order to make the player move at a faster pace I'd need to mess around with the "Movement Speed" component in the inspector attached to my square. Make the movement speed about 8, and move around and the player now moves at a faster rate!
+  
+  # Jumping
+  Now we're focusing on jumps, here's the script for it, firstly we've made variables that work off of if the player's feet is touching the ground if it is then it allows the player to jump, if not then they can't be allowed to jump.
+  
+  Here's the script: 
+  using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Charactercontroller : MonoBehaviour
+{
+    public float MovementSpeed = 10f;
+    private float Movement;
+    private Rigidbody2D rb;
+    public float JumpForce = 1;
+    private bool isGrounded;
+    public float CheckRadius;
+    public Transform feetPos;
+    public LayerMask whatIsGround;
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
+    void Start()
+    {
+     
+    }
+
+  
+    void Update()
+    {
+        Movement = Input.GetAxis("Horizontal");
+        isGrounded = Physics2D.OverlapCircle(feetPos.position, CheckRadius, whatIsGround);
+        if (isGrounded==true && Input.GetKeyDown(KeyCode.Space))
+        {
+            rb.velocity = Vector2.up * JumpForce;
+        }
+       
+    }
+
+    private void FixedUpdate()
+    {
+          Movement = Input.GetAxisRaw("Horizontal");
+        rb.velocity = new Vector2(Movement * MovementSpeed, rb.velocity.y);
+
+    }
+}
+
+  
+  To test this go back to unity and make an empty game object called FeetPos which helps determine where we want the feet position of our character.
+  Once done, then place the FeetPos on the player object underneath it making it a parent object. Select our player and head to the inspector, now choose feetPos, and work find the object and drag and drop to the appropriate area. Make the radius of the position around 0.3 so that it's not so big or small. Turn up the jump force to 10 and Gravity scale so that the character doesn't function like a balloon. 
+  
+  
+  
+
+Make a new layer called Ground, and add an empty game object to it this makes it so that the program can detect any ground allowing us to jump accordingly once we press the correct key. 
+I've run the test and it works, small and easy jumps if I wanted to change how high I can make the jump, I'd need to make sure that the Jump force is increased to make the jump higher. 20 makes the jump much more realistic, and makes the jump feel more natural and smoother.
     
    
