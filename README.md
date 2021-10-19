@@ -209,4 +209,43 @@ public class Charactercontroller : MonoBehaviour
 Make a new layer called Ground, and add an empty game object to it this makes it so that the program can detect any ground allowing us to jump accordingly once we press the correct key. 
 I've run the test and it works, small and easy jumps if I wanted to change how high I can make the jump, I'd need to make sure that the Jump force is increased to make the jump higher. 20 makes the jump much more realistic, and makes the jump feel more natural and smoother.
     
+## 19/10/21
+# Day 4 Falling off thr stage, and respawn.
    
+In the idea of a platform fighter, the goal is to knock your opponents off the screen if the game is being played with lives then it's normal for the player to respawn back on to the stage after falling off, that's what I'll be working on today. 
+
+
+First things first, is to make an invisible platform that exists at the bottom of the level and acts as a trigger that when touched, will destroy our player object and make it respawn, but to make it outside the Camera's initial view. In order to make it so that it's not in plain view I changed the opacity of the rectangle. Check off the "Is Trigger" box in the Inspector. Make sure that the player is tagged as "Player" like in the previous project. 
+
+Next I needed to set a respawn point for the player so that we know where they'll respawn when they come back from falling. 
+Now it's time to make a script for this to work, make a new script and I chose to name it BlastZone. 
+
+Next I ended up writing this code:
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class BlastZones : MonoBehaviour
+{
+
+    [SerializeField] private Transform player;
+
+    [SerializeField] private Transform BlastZone;
+    // Start is called before the first frame update
+    private void OnTriggerEnter2D(Collider other)
+    {
+        player.transform.position = BlastZone.transform.position;  
+    }
+}
+
+The code is basically telling Unity to respawn our player object whenever it hits the collider in this case being the blast zone. Next I had to assign the blast zone and player variables after attaching the script to the Blastzone object (our trigger). However one I play the project all seems to be working except there's no respawn happening because Unity encountered the error, OntriggerEnter2D. The solution was to change the code to OntriggerEnter but one problem is our player object falls through the floor. To solve this I reused one of my other square assets as a floor and it works the only problem is now the respawn doesn't work. 
+
+The issue wasn't in the code it was the fact that I used the incorrect game object, for the respawn point
+
+
+# Part 2 Moving platforms 
+
+This one's fairly easy, some stages will have moving platforms and I wanted to essentially go over how to do them, this was because I wanted to make stages similar to the ones from Super Smash Bros. 
+
+The idea behind this methodology is to animate top platform along the stage, First things First, I made an animations folder, then went to Window >Animation>Animation and chose the timeline then begun animating, the idea here is to have it loop an animation that sees the stage move side to side at an appropriate pace. My first issue was with the inital Keyframes themseleves and the fact the platform is moving too fast. So to fix this I'd space them out every 30 frames then decided it was too fast and spaced it out more to 80 frames each and it worked. 
+I noticed that there were some problems with the animation after it ended as the platform would just teleport back, so I had to loop its position in order to make the animation much more smoother. This is to make sure that the positioning works. 
