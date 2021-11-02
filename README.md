@@ -210,7 +210,7 @@ Make a new layer called Ground, and add an empty game object to it this makes it
 I've run the test and it works, small and easy jumps if I wanted to change how high I can make the jump, I'd need to make sure that the Jump force is increased to make the jump higher. 20 makes the jump much more realistic, and makes the jump feel more natural and smoother.
     
 ## 19/10/21
-# Day 4 Falling off thr stage, and respawn.
+# Day 4 Falling off the stage, and respawn.
    
 In the idea of a platform fighter, the goal is to knock your opponents off the screen if the game is being played with lives then it's normal for the player to respawn back on to the stage after falling off, that's what I'll be working on today. 
 
@@ -249,3 +249,102 @@ This one's fairly easy, some stages will have moving platforms and I wanted to e
 
 The idea behind this methodology is to animate top platform along the stage, First things First, I made an animations folder, then went to Window >Animation>Animation and chose the timeline then begun animating, the idea here is to have it loop an animation that sees the stage move side to side at an appropriate pace. My first issue was with the inital Keyframes themseleves and the fact the platform is moving too fast. So to fix this I'd space them out every 30 frames then decided it was too fast and spaced it out more to 80 frames each and it worked. 
 I noticed that there were some problems with the animation after it ended as the platform would just teleport back, so I had to loop its position in order to make the animation much more smoother. This is to make sure that the positioning works. 
+
+## 02/11/21
+
+# Day 5 working on Melee attacks and knockback
+For this part, I wanted to make a swordfighter do attacks first so I have an easy visual indicator that the attack system for the game actually works. To make this hapepn, I imported a sword sprite and attached it to my main fighter, so when I move around the sword also moves around in the scene with the main character. Now that movement is working with no issues whatsoever, it's time to make a player attack script. 
+
+To make it so attacks can't be spammed instantly I'm going to be adding a small timer for cooldown between attacks so far I have: 
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Playerattack : MonoBehaviour
+{
+    private float Cooldown;
+    public float StartCooldown;
+
+    private void Update()
+    {
+        if (Cooldown<=0)
+            //then you'd be allowed to attack because the cooldown is at 0 
+        {
+            StartCooldown = Cooldown;
+        }
+    }
+}
+
+What I'm doing here is I'm telling the program when the cooldown is active and when it's not hence if the cooldown for an attack is at 0. I later realised that I'd have to apply this script to a lot more attacks one for each direction one for up, down, left and right. But in order to get this right I'm primarily focusing on neutral attack or the standard button press attack, or a neutral air. 
+
+
+First things first I made an enemy script that helps ensure that when attaked the enemy takes damage to make it so that both players can deal damage I've attached the script to both players respectively, so that both can be attacked. 
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Enemy : MonoBehaviour
+{
+    public int health;
+    public float speed;
+
+    public void TakeDamage(int damage)
+    {
+        health -= damage;
+        Debug.Log("damage TAKEN");
+    }
+}
+The script just ensures that damage is taken when our character makes an attack. 
+
+Here's the attack script 
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Playerattack : MonoBehaviour
+{
+    private float Cooldown;
+    public float StartCooldown;
+    public LayerMask whatisEnemies;
+    public Transform attackPos;
+    public float attackRange;
+    public int damage; 
+    private void Update()
+    {
+        if (Cooldown<=0)
+            //then you'd be allowed to attack because the cooldown is at 0 
+        {
+            StartCooldown = Cooldown;
+        }
+        if (Input.GetKey(KeyCode.P))
+        {
+            Collider2D[] enemiestoDamage = Physics2D.OverlapCircleAll(attackPos.position,attackRange,whatisEnemies);
+            for (int i = 0; i < enemiestoDamage.Length; i++)
+            {
+                enemiestoDamage[i].GetComponent<Enemy>().TakeDamage(damage); 
+            }
+        }
+        else
+        {
+            Cooldown -= Time.deltaTime; 
+        }
+
+        void OnDrawGizmosSelected()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(attackPos.position, attackRange);
+
+        }
+    }
+}
+
+   
+    A problem I ran into was that the Hitbox wouldn't show, so I had to change the "void" on the OnDrawGizmos line, to private void, so that it'd be declared and would show up in my unity view. Messing with the attack range allowed me to mess around with the size of the hitbox and setting the cooldown to 0.3 allows for a small window for attack cooldown to occur within unity. 
+   After adding the Enemy tag to the second sprite it should now recognise the attack. 
+    
+Seeing as there's no animation to it, it's hard to see if something takes damage, hence the debug, that tels us at the bottom of the screen if something takes damage or not, and it does!
+
+
