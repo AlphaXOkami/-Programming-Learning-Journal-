@@ -345,6 +345,6 @@ public class Playerattack : MonoBehaviour
     A problem I ran into was that the Hitbox wouldn't show, so I had to change the "void" on the OnDrawGizmos line, to private void, so that it'd be declared and would show up in my unity view. Messing with the attack range allowed me to mess around with the size of the hitbox and setting the cooldown to 0.3 allows for a small window for attack cooldown to occur within unity. 
    After adding the Enemy tag to the second sprite it should now recognise the attack. 
     
-Seeing as there's no animation to it, it's hard to see if something takes damage, hence the debug, that tels us at the bottom of the screen if something takes damage or not, and it does!
+Seeing as there's no animation to it, it's hard to see if something takes damage, hence the debug, that tels us at the bottom of the screen if something takes damage or not, and it does! The cooldown elements were inspired by framedata principles from other fighting games. 
 
 
