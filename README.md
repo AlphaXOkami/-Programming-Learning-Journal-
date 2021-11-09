@@ -345,6 +345,219 @@ public class Playerattack : MonoBehaviour
     A problem I ran into was that the Hitbox wouldn't show, so I had to change the "void" on the OnDrawGizmos line, to private void, so that it'd be declared and would show up in my unity view. Messing with the attack range allowed me to mess around with the size of the hitbox and setting the cooldown to 0.3 allows for a small window for attack cooldown to occur within unity. 
    After adding the Enemy tag to the second sprite it should now recognise the attack. 
     
-Seeing as there's no animation to it, it's hard to see if something takes damage, hence the debug, that tels us at the bottom of the screen if something takes damage or not, and it does! The cooldown elements were inspired by framedata principles from other fighting games. 
+Seeing as there's no animation to it, it's hard to see if something takes damage, hence the debug, that tels us at the bottom of the screen if something takes damage or not, and it does! The cooldown elements were inspired by framedata principles from other fighting games.
+    
+     ## 12/10/21
+     # Knockback and Air dashing
+    
+    In this tutorial, I'll be looking at the knockback in this style of fighter as well as dashing for faster movement. 
+    
+    First working on the dashes as it's a smaller mechanic to work on first. So firstly, I had to decide what key players should press in order to get the dash working I chose Z 
+    
+   I added more to the player movement script, by adding some more public variables and bools such as if the player is dashing play the dash and so on. Here's the code: 
+    
+    using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
+public class Charactercontroller : MonoBehaviour
+{
+    public float MovementSpeed = 10f;
+    private float Movement;
+    private Rigidbody2D rb;
+    public float JumpForce = 1;
+    private bool isGrounded;
+    public float CheckRadius;
+    public Transform feetPos;
+    public LayerMask whatIsGround;
+    public float DashForce;
+    public float StartDashTimer;
+
+
+    float CurrentDashTimer;
+    float DashDirection;
+    bool isDashing;
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
+    void Start()
+    {
+     
+    }
+
+  
+    void Update()
+    {
+        Movement = Input.GetAxis("Horizontal");
+        isGrounded = Physics2D.OverlapCircle(feetPos.position, CheckRadius, whatIsGround);
+        if (isGrounded==true && Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            rb.velocity = Vector2.up * JumpForce;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Z) && !isGrounded && movX !=0)
+        {
+            isDashing=true
+            CurrentDashTimer = StartDashTimer;
+            rb.velocity = Vector2.zero;
+            DashDirection = (int)movX;
+        }
+
+        if (isDashing)
+        {
+            rb.velocity = transform.right * DashDirection * DashDirection;
+            CurrentDashTimer -= CurrentDashTimer.deltaTime;
+
+            if (CurrentDashTimer <-0)
+            {
+                isDashing = false;
+            }
+        }
+       
+    }
+
+    private void FixedUpdate()
+    {
+          Movement = Input.GetAxisRaw("Horizontal");
+        rb.velocity = new Vector2(Movement * MovementSpeed, rb.velocity.y);
+
+    }
+}
+
+                                      
+                                      
+                                      
+                                      
+                                      
+                                      
+                                      
+ 
+                
+                using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Charactercontroller : MonoBehaviour
+{
+    public float MovementSpeed = 10f;
+    private float Movement;
+    private Rigidbody2D rb;
+    public float JumpForce = 1;
+    private bool isGrounded;
+    public float CheckRadius;
+    public Transform feetPos;
+    public LayerMask whatIsGround;
+    public float DashForce;
+    public float StartDashTimer;
+
+
+    float CurrentDashTimer;
+    float DashDirection;
+    bool isDashing;
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
+    void Start()
+    {
+     
+    }
+
+  
+    void Update()
+    {
+        Movement = Input.GetAxis("Horizontal");
+        isGrounded = Physics2D.OverlapCircle(feetPos.position, CheckRadius, whatIsGround);
+        if (isGrounded==true && Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            rb.velocity = Vector2.up * JumpForce;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Z) && !isGrounded && Movement !=0)
+        {
+            isDashing = true;
+            CurrentDashTimer = StartDashTimer;
+            rb.velocity = Vector2.zero;
+            DashDirection = (int)Movement;
+        }
+
+        if (isDashing)
+        {
+            rb.velocity = transform.right * DashDirection * DashDirection;
+            CurrentDashTimer -= Time.deltaTime;
+
+            if (CurrentDashTimer <-0)
+            {
+                isDashing = false;
+            }
+        }
+       
+    }
+
+    private void FixedUpdate()
+    {
+          Movement = Input.GetAxisRaw("Horizontal");
+        rb.velocity = new Vector2(Movement * MovementSpeed, rb.velocity.y);
+
+    }
+}
+
+                
+                                  
+                
+
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+   
+    
+            
+                
+                
+                
+                
+                
+                
+                
+
+           
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+    
 
