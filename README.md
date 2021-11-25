@@ -351,19 +351,15 @@ Seeing as there's no animation to it, it's hard to see if something takes damage
     
     
  ## 9/11/21 
-    # Implementing Dashes and Air Dashes
+ #  Day 6 Implementing Dashes and Air Dashes
     
+  For this week, I wanted to primarily work on implementing a dash and air dash mechanic, they're core additions to the platform fighter genre, as they allow for better movemeent. To make things easier I decided to  add more to the player movement script, by adding some more public variables and bools such as if the player is dashing play the dash and so on. Here's the code: 
     
-    In this tutorial, I'll be looking at the knockback in this style of fighter as well as dashing for faster movement. 
+  
     
-    First working on the dashes as it's a smaller mechanic to work on first. So firstly, I had to decide what key players should press in order to get the dash working I chose Z 
-    
-   I added more to the player movement script, by adding some more public variables and bools such as if the player is dashing play the dash and so on. Here's the code: 
-    
-    using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class Charactercontroller : MonoBehaviour
 {
     public float MovementSpeed = 10f;
