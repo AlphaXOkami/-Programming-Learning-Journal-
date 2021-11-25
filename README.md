@@ -504,7 +504,52 @@ public class Charactercontroller : MonoBehaviour
 
     }
 }
+                                    
+                                                                          
+                                                                          
 
+                                      
+                                      
+                                      
+                                      
+                                      
+First Looking at the task for the first time, I wanted to make it so that I had a new way of moving around the stage, adding a skill level to my game that the player would intially have to play into and use in order to get better at the game. After I experimented with the code I noticed something, the dash came out very very slowly, which made it hard for me to make my character dash directly downwards if I wanted them to retreat back to the ground fast for a 'Wavedash'mechanic. So in order to fix this, I had to go into unity and change some of the values of the dash in the inspector making it so that the dash was moving at a good speed. I changed the values in the inspector until I got a speed that was not too fast nor too slow, which worked out perfectly for the setting. The idea is to press the Z key immediatley after you the player, jumps so that the player sort of short hops for more momentum. Making movement easier to deal with.
+   
+## 12/10/21
+#  Day 7 Implementing backgrounds/Backdrops
+Taking a break from the physics and any of the other pieces of code I have had to write, I decided to take a chance to work on learning how to import things such as backgrounds to my scene to make things stand out more, whilst images seem straightforward I wanted to tackle videos specifically. 
+                                      
+First things first I had to get a video, file and import it into Unity by dragging the file into the assets folder. Next I made an empty GameObject in the heirachy and ended up adding a video player component to the object. Next I dragged the clip into the Video clip player in the inspector. However the problem I had was, when I played the game I could hear the stage sound but I could not see the video playing in the background which had me confused which became a problem. I had no idea what possible problems I had, so I looked over at the YouTube Tutorial I was following, the fix was to change the render mode in the inspector to Camera Near or Far plane then have it play and it should work. At first I tried working with near plane, it was not playing, so in order to fix this I changed it to far plane and it still did not show. I looked over it once again to see what the problem would be. My best guess was that I was missing a camera to put in the camera slot. After placing the main camera in the camera slot I couls bpth see and hear the games background and it played when I wanted it to, meaning that it was working.                                    
+                                      
+                                      
+                                      
+                                    
+                                      
+                                      
+                                      
+                                   
+                                      
+                                      
+                                      
+                                   
+                                                                        
+                                                                          
+                                                                          
+                                      
+                                      
+
+                                      
+                                      
+                                      
+                                      
+                                      
+                                      
+                                      
+                                      
+                                      
+                                      
+                                      
+                                      
                 
                                   
                 
