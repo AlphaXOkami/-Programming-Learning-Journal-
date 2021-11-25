@@ -350,8 +350,9 @@ Seeing as there's no animation to it, it's hard to see if something takes damage
 
     
     
- ## 9/11/21
-     # Knockback and Air dashing
+ ## 9/11/21 
+    # Implementing Dashes and Air Dashes
+    
     
     In this tutorial, I'll be looking at the knockback in this style of fighter as well as dashing for faster movement. 
     
