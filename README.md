@@ -347,7 +347,10 @@ public class Playerattack : MonoBehaviour
     
 Seeing as there's no animation to it, it's hard to see if something takes damage, hence the debug, that tels us at the bottom of the screen if something takes damage or not, and it does! The cooldown elements were inspired by framedata principles from other fighting games.
     
-     ## 12/10/21
+
+    
+    
+ ## 9/11/21
      # Knockback and Air dashing
     
     In this tutorial, I'll be looking at the knockback in this style of fighter as well as dashing for faster movement. 
