@@ -527,21 +527,32 @@ First things first I had to get a video, file and import it into Unity by draggi
 Firstly I needed to make a Coin sprite for this one, so I created a circle sprite first. With that sprite I made sure I added a Circle Collider 2D, mainly because I am working in a 2D space. To make it so the object is destroyed I made the object have an IsTrigger. Then I created the script and attached it to the player. Here is the script below: 
 
 
+                                      using System.Collections;
 
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+                                      using System.Collections.Generic;
 
-public class Coin : MonoBehaviour
-{
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.CompareTag("Coin"))
-        {
-            Destroy(other.gameObject);
-        }
-    }
-}
+                                      using UnityEngine;
+
+
+                                      public class Coin : MonoBehaviour
+
+                                  {
+   
+                                      private void OnTriggerEnter2D(Collider2D other)
+    
+                                      {
+        
+                                      if (other.gameObject.CompareTag("Coin"))
+        
+                                      {
+            
+                                      Destroy(other.gameObject);
+      
+                                      }
+    
+                                    }
+
+                                  }
 
 
 
