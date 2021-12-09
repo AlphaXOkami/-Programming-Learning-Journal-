@@ -522,9 +522,34 @@ Taking a break from the physics and any of the other pieces of code I have had t
 First things first I had to get a video, file and import it into Unity by dragging the file into the assets folder. Next I made an empty GameObject in the heirachy and ended up adding a video player component to the object. Next I dragged the clip into the Video clip player in the inspector. However the problem I had was, when I played the game I could hear the stage sound but I could not see the video playing in the background which had me confused which became a problem. I had no idea what possible problems I had, so I looked over at the YouTube Tutorial I was following, the fix was to change the render mode in the inspector to Camera Near or Far plane then have it play and it should work. At first I tried working with near plane, it was not playing, so in order to fix this I changed it to far plane and it still did not show. I looked over it once again to see what the problem would be. My best guess was that I was missing a camera to put in the camera slot. After placing the main camera in the camera slot I couls bpth see and hear the games background and it played when I wanted it to, meaning that it was working.  
                                       
  ## 19/10/21                                     
- #  Firing projectiles 
+ #  Making collectibles
+
+Firstly I needed to make a Coin sprite for this one, so I created a circle sprite first. With that sprite I made sure I added a Circle Collider 2D, mainly because I am working in a 2D space. To make it so the object is destroyed I made the object have an IsTrigger. Then I created the script and attached it to the player. Here is the script below: 
+
+
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Coin : MonoBehaviour
+{
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Coin"))
+        {
+            Destroy(other.gameObject);
+        }
+    }
+}
+
+
+
+
+
+Here we are looking to find a coin object, the script is telling us, the player that when they touch the coin it will destroy the game object, and allow us to collect the coin. After testing it, it worked.   
                                       
-I have made it clear that for certain chatracters in platform fighters, that they will often have projectiles that they would need to shoot. So firstly I needed a projectile to shoot.                                         
+  
  
                                   
                                       
